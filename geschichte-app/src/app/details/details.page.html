@@ -1,9 +1,12 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>details</ion-title>
+    <ion-title>Details: {{title}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button [text]="buttonText"></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content class='ion-padding'>
+  <p>{{content}}</p>
 </ion-content>

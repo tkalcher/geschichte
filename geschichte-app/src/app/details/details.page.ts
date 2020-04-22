@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-details',
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DetailsPage implements OnInit {
 
-  constructor() { }
+  buttonText="Zurück";
+  content: string='';
+  title='';
+
+  constructor(private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(params =>{
+      if (this.router.getCurrentNavigation().extras.state){
+            this.title=this.router.getCurrentNavigation().extras.state.title,
+            this.content=this.router.getCurrentNavigation().extras.state.content
+      }
+    });
   }
 
 }

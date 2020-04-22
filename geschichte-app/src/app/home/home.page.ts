@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import {v4 as uuidv4} from 'uuid';
-import { ReturnStatement } from '@angular/compiler';
+import { Router, NavigationExtras } from '@angular/router';
+import { Content } from '@angular/compiler/src/render3/r3_ast';
+
 
 @Component({
   selector: 'app-home',
@@ -15,9 +17,11 @@ topics= [
   {id: uuidv4(), title:'Kalter Krieg', content:'Auseinandersetzung zwischen USA und UdSSR'},
   {id: uuidv4(), title:'Kalter Krieg', content:'Auseinandersetzung nach 2. Weltkrieg'}
 ];
+title="";
 
 
-  constructor() {}
+
+  constructor(private router: Router) {}
 
   ionViewWillEnter(){
     let id= uuidv4();
@@ -29,12 +33,21 @@ topics= [
     const pos = this.topics.findIndex((t)=>{
     return t.id==id;});
 
-    if (pos > -1){
+    if (pos > -1) {
       const title= this.topics[pos].title;
       console.log ('Titel: ' + title);
+
+      let extras: NavigationExtras={
+        state:{
+          id: id,
+          title: title,
+          content: this.topics[pos].content
+        }
+      };
+
+      this.router.navigate(['/details'], extras);
+
     }
 
-    
-  
-
   }
+}
