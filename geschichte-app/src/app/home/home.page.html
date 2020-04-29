@@ -11,13 +11,19 @@
 
 
 <ion-list>
-  <ion-item *ngFor='let t of topics' (click)='showTopic(t.id)'>
-     <ion-label>
-      {{t.title}}: {{t.content}}
-    </ion-label>
-  </ion-item>
-</ion-list>
+  <ion-item-sliding #item *ngFor='let t of topics' >
+
+    <ion-item (click)='showTopic(t.id)'>
+      <ion-label>{{t.title}}: {{t.content}}</ion-label>
+    </ion-item>
+  
+    <ion-item-options side="end">
+      <ion-item-option (click)="editTopic(t.id, item)">edit</ion-item-option>
+    </ion-item-options>
+  </ion-item-sliding>
+  </ion-list>
 
 <h2 *ngIf='title!=""'>{{t.title}}</h2>
+
 
 </ion-content>

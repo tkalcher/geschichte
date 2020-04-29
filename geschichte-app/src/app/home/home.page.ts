@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import {v4 as uuidv4} from 'uuid';
 import { Router, NavigationExtras } from '@angular/router';
 import { Content } from '@angular/compiler/src/render3/r3_ast';
+import { ModalController } from '@ionic/angular';
+import { EditPage } from '../edit/edit.page';
 
 
 @Component({
@@ -21,12 +23,38 @@ title="";
 
 
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private modalCrtl: ModalController) {}
 
   ionViewWillEnter(){
     let id= uuidv4();
     console.log(this.topics);
   }
+
+ async editTopic(id, item){
+    console.log(id);
+    const pos=this.topics.findIndex((t)=>{
+      return t.id==id;
+    });
+
+    if (pos > -1){
+      const modal=await this.modalCrtl.create({
+        component: EditPage,
+        componentProps:{
+          title: this.topics[pos].title
+        }
+      });
+      await modal.present();
+    }
+    // colese sliding item
+    item.close();
+ }
+
+
+   
+    
+    
+  
+
 
 
   showTopic(id){
