@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import {v4 as uuidv4} from 'uuid';
 import { Router, NavigationExtras } from '@angular/router';
 import { Content } from '@angular/compiler/src/render3/r3_ast';
 import { ModalController } from '@ionic/angular';
 import { EditPage } from '../edit/edit.page';
+import { Topic } from 'src/models/Topic';
 
 
 @Component({
@@ -15,19 +15,25 @@ export class HomePage {
 
 
 topics= [
-  {id: uuidv4(), title:'Augsburger Reichs- und Religionsfriede', content: 'Dieser Friede wurde 1555...'},
-  {id: uuidv4(), title:'Kalter Krieg', content:'Auseinandersetzung zwischen USA und UdSSR'},
-  {id: uuidv4(), title:'Kalter Krieg', content:'Auseinandersetzung nach 2. Weltkrieg'}
+  new Topic('Augsburger Reichs- und Religionsfriede', 'dieser Friede...'),
+  new Topic('Kalter Krieg','Auseinandersetzung zwischen USA und UdSSR'),
+  new Topic('Hallo', 'Das ist mein Mustersatz'),
+  new Topic('Kalter Krieg', 'Auseinandersetzung nach 2. Weltkrieg'),
+  new Topic('Zweiter Weltkrieg','Es kämpften ...')
+ 
 ];
-title="";
 
 
 
   constructor(private router: Router, private modalCrtl: ModalController) {}
 
   ionViewWillEnter(){
-    let id= uuidv4();
     console.log(this.topics);
+
+    let to = new Topic('Augsburger Reichs- und Religionsfriede', 'Friede');
+    console.log(to.title);
+
+  
   }
 
  async editTopic(id, item){
@@ -44,7 +50,16 @@ title="";
         }
       });
       await modal.present();
+
+      const {data}=await modal.onWillDismiss();
+
+      if(data){
+        //console.log(data.title);
+        this.topics[pos].title=data.title;
+      }
     }
+
+
     // colese sliding item
     item.close();
  }

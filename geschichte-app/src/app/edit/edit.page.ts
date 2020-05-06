@@ -23,6 +23,15 @@ export class EditPage implements OnInit {
     let title = this.navParams.get('title');
   this.titleForm.get('title').setValue(title);
   }
+
+
+  async save(){
+    const result ={
+      title: this.titleForm.get('title').value
+    };
+    await this.modalCtr.dismiss(result);
+  }
+
   
 
 }
